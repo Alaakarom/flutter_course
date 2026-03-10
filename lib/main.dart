@@ -5,57 +5,45 @@ void main() {
 }
 
 
-// ignore: use_key_in_widget_constructors
-class MyApp extends StatefulWidget {
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool isDark = false;
+class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('welcome');
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: isDark? Colors.blue :  Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
+        body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10)
+              SizedBox(
+                height: 90,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 20,
+                  itemBuilder: (context,index){
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle
+                            ),
+                            child: Image.network(
+                              'https://img.freepik.com/free-photo/portrait-young-handsome-man-jean-shirt-smiling-with-crossed-arms_176420-12083.jpg?semt=ais_rp_50_assets&w=740&q=80',
+                              height: 50,
+                              width: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Text('john')
+                        ],
+                      ),
+                    );
+                  } 
                 ),
-                child: Image.network(
-                  'https://img.freepik.com/free-photo/lavender-field-sunset-near-valensole_268835-3910.jpg?semt=ais_hybrid&w=740&q=80'
-                ),
-              ),
-              SizedBox(height: 15,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'الطلاب'
-                  ),
-                  SizedBox(width: 15,),
-                  ElevatedButton(
-                    onPressed: (){
-                      setState(() {
-                        isDark = !isDark;
-                      });
-                      print(isDark);
-                    },
-                    child: Text('add student'))
-                ],
-              ),
-              
-            ],
+              )
+            ]
           ),
         )
       ),
