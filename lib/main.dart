@@ -1,53 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/constants.dart';
+import 'package:flutter_course/on_boarding.dart';
+import 'package:flutter_course/tasks_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await getDataFromShared();
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 90,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 20,
-                  itemBuilder: (context,index){
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Container(clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle
-                            ),
-                            child: Image.network(
-                              'https://img.freepik.com/free-photo/portrait-young-handsome-man-jean-shirt-smiling-with-crossed-arms_176420-12083.jpg?semt=ais_rp_50_assets&w=740&q=80',
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Text('john')
-                        ],
-                      ),
-                    );
-                  } 
-                ),
-              )
-            ]
-          ),
-        )
-      ),
-    );
-    
+    return MaterialApp(home: isOpen ? TasksScreen() : OnBoarding());
   }
+}
+
+Future<void> getDataFromShared() async {
+  SharedPreferences sh = await SharedPreferences.getInstance();
+  isOpen = sh.getBool('screen') ?? false;
 }
