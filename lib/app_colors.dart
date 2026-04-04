@@ -8,3 +8,5 @@ class AppColors {
   static Color font = Colors.white;
   static Color fl = Color(0xFF63D9F3);
 }
+
+
